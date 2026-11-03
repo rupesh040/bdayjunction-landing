@@ -6,8 +6,14 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { banner, site } from "@/data";
 
+const defaultBanners = [
+  "/images/hero/banner-1.webp",
+  "/images/hero/banner-2.webp",
+  "/images/hero/banner-3.webp",
+];
+
 export default function Hero() {
-  const banners = banner.banners && banner.banners.length > 0 ? banner.banners : [];
+  const banners = banner.banners && banner.banners.length > 0 ? banner.banners : defaultBanners;
 
   const [[currentIndex, direction], setPage] = useState<[number, number]>([0, 0]);
   const [isPaused, setIsPaused] = useState(false);
@@ -64,7 +70,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full overflow-hidden bg-slate-950 h-[360px] sm:h-[460px] md:h-[540px] lg:h-[620px]"
+      className="relative w-full overflow-hidden bg-slate-950 h-[460px] "
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       aria-label={`${site.name} Banner`}

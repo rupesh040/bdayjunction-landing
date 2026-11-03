@@ -24,7 +24,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="scroll-mt-24 relative overflow-hidden bg-[#fff7fa] py-14 sm:py-16 md:py-20 lg:py-24"
+      className="scroll-mt-24 relative overflow-hidden bg-[#fff7fa] py-10"
     >
       <div className="pointer-events-none absolute -left-40 top-20 h-[420px] w-[420px] rounded-full bg-[#f5a5d0]/30 blur-[120px]" />
       <div className="pointer-events-none absolute -right-40 bottom-0 h-[420px] w-[420px] rounded-full bg-[#b85bd2]/20 blur-[120px]" />

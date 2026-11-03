@@ -16,7 +16,7 @@ export default function ServicesSection() {
   } = services;
 
   return (
-    <section id="services" className="scroll-mt-24 relative overflow-hidden bg-gradient-to-b from-white via-rose-50/30 to-white py-16 sm:py-24">
+    <section id="services" className="scroll-mt-24 relative overflow-hidden bg-gradient-to-b from-white via-rose-50/30 to-white py-10">
       <div className="pointer-events-none absolute -left-40 top-20 h-[450px] w-[450px] rounded-full bg-rose-200/20 blur-[140px]" />
       <div className="pointer-events-none absolute -right-40 bottom-10 h-[450px] w-[450px] rounded-full bg-purple-200/20 blur-[140px]" />
 

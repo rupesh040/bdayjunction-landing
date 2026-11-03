@@ -62,9 +62,9 @@
         "variants": {
           "BirthdayBanner1": {
             "banners": [
-              "/images/hero/hero-1.jpg",
-              "/images/hero/hero-2.jpg",
-              "/images/hero/hero-3.jpg"
+              "/images/hero/banner-1.webp",
+              "/images/hero/banner-2.webp",
+              "/images/hero/banner-3.webp"
             ]
           }
         }

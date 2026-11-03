@@ -23,7 +23,7 @@ export default function FaqSection() {
   } = faq;
 
   return (
-    <section id="faq" className="scroll-mt-24 relative overflow-hidden bg-white py-16 sm:py-24">
+    <section id="faq" className="scroll-mt-24 relative overflow-hidden bg-white py-10">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-14">
         <SectionHeading
           eyebrow={eyebrow}

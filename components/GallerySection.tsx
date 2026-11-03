@@ -17,7 +17,7 @@ export default function GallerySection() {
   const fullHeading = `${headingPart1} ${headingPart2}`.trim();
 
   return (
-    <section id="gallery" className="scroll-mt-24 relative overflow-hidden bg-gradient-to-b from-white via-rose-50/20 to-white py-16 sm:py-24">
+    <section id="gallery" className="scroll-mt-24 relative overflow-hidden bg-gradient-to-b from-white via-rose-50/20 to-white py-10">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-14">
         <SectionHeading
           eyebrow={eyebrow}

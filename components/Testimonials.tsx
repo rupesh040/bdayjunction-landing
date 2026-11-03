@@ -63,11 +63,11 @@ export default function Testimonials() {
   return (
     <section 
       id="testimonials"
-      className="scroll-mt-24 relative overflow-hidden bg-gradient-to-b from-white via-rose-50/30 to-white py-16 sm:py-24"
+      className="scroll-mt-24 relative overflow-hidden bg-gradient-to-b from-white via-rose-50/30 to-white py-10"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="pointer-events-none absolute left-1/2 top-0 -z-0 h-80 w-[650px] -translate-x-1/2 rounded-full bg-rose-100/40 blur-3xl" />
+      <div className="pointer-events-none absolute left-1/2 top-0 -z-0 h-80 w-[650px] z-[-9] -translate-x-1/2 rounded-full bg-rose-100/40 blur-3xl" />
 
       <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-14">
         <SectionHeading

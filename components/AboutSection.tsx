@@ -42,7 +42,7 @@ export default function AboutSection() {
   const fullHeading = `${headingPart1} ${headingPart2}`.trim();
 
   return (
-    <section id="about" className="scroll-mt-24 relative overflow-hidden bg-gradient-to-b from-white via-rose-50/25 to-white py-16 sm:py-24">
+    <section id="about" className="scroll-mt-24 relative overflow-hidden bg-gradient-to-b from-white via-rose-50/25 to-white py-10">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-14">
         <motion.div
           variants={sectionVariants}
