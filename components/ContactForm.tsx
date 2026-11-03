@@ -34,7 +34,6 @@ export default function ContactForm() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Allow digits, plus, hyphens, spaces, and parentheses
     const value = event.target.value.replace(/[^\d+ ()-]/g, "");
     setPhone(value);
   };
@@ -42,12 +41,9 @@ export default function ContactForm() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
-
-    // Realistic submission simulation
     setTimeout(() => {
       setIsSubmitting(false);
       setShowSuccess(true);
-      // Reset form fields
       setName("");
       setEmail("");
       setPhone("");
@@ -60,7 +56,6 @@ export default function ContactForm() {
     <>
       <form onSubmit={handleSubmit} className="mt-7 space-y-4 sm:space-y-4.5">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {/* Your Name */}
           <div className="relative">
             <label htmlFor="contact-name" className="sr-only">
               {formFields.namePlaceholder}
@@ -81,8 +76,6 @@ export default function ContactForm() {
               className="h-[52px] sm:h-[54px] w-full rounded-full border border-[#f8a9c7] bg-white pl-12 pr-5 text-[14px] sm:text-[15px] text-slate-800 outline-none transition-all placeholder:text-[#798498] focus:border-[#ec186c] focus:ring-4 focus:ring-[#ec186c]/10"
             />
           </div>
-
-          {/* Your Email */}
           <div className="relative">
             <label htmlFor="contact-email" className="sr-only">
               {formFields.emailPlaceholder}
@@ -103,8 +96,6 @@ export default function ContactForm() {
               className="h-[52px] sm:h-[54px] w-full rounded-full border border-[#f8a9c7] bg-white pl-12 pr-5 text-[14px] sm:text-[15px] text-slate-800 outline-none transition-all placeholder:text-[#798498] focus:border-[#ec186c] focus:ring-4 focus:ring-[#ec186c]/10"
             />
           </div>
-
-          {/* Phone Number */}
           <div className="relative">
             <label htmlFor="contact-phone" className="sr-only">
               {formFields.phonePlaceholder}
@@ -126,8 +117,6 @@ export default function ContactForm() {
               className="h-[52px] sm:h-[54px] w-full rounded-full border border-[#f8a9c7] bg-white pl-12 pr-5 text-[14px] sm:text-[15px] text-slate-800 outline-none transition-all placeholder:text-[#798498] focus:border-[#ec186c] focus:ring-4 focus:ring-[#ec186c]/10"
             />
           </div>
-
-          {/* Choose Option */}
           <div className="relative">
             <label htmlFor="contact-option" className="sr-only">
               {formFields.servicePlaceholder}
@@ -162,8 +151,6 @@ export default function ContactForm() {
             />
           </div>
         </div>
-
-        {/* Your Message */}
         <div className="relative">
           <label htmlFor="contact-message" className="sr-only">
             {formFields.messagePlaceholder}
@@ -182,8 +169,6 @@ export default function ContactForm() {
             className="w-full resize-none rounded-2xl border border-[#f8a9c7] bg-white pl-12 pr-5 pt-3.5 pb-4 text-[14px] sm:text-[15px] text-slate-800 outline-none transition-all placeholder:text-[#798498] focus:border-[#ec186c] focus:ring-4 focus:ring-[#ec186c]/10"
           />
         </div>
-
-        {/* Submit Button */}
         <div className="flex justify-center pt-2 sm:pt-3">
           <motion.button
             type="submit"
@@ -205,8 +190,6 @@ export default function ContactForm() {
             )}
           </motion.button>
         </div>
-
-        {/* Inline Success Notice */}
         <AnimatePresence>
           {showSuccess && (
             <motion.div
