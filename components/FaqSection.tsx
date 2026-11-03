@@ -1,97 +1,76 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronsDown, ChevronsUp } from "lucide-react";
-import { faq as faqData } from "@/data";
+import { ChevronDown } from "lucide-react";
+import { faq } from "@/data";
+import SectionHeading from "./SectionHeading";
 
 export default function FaqSection() {
-  const faq = faqData as any;
   const [openIndex, setOpenIndex] = useState<number>(0);
 
   const toggleItem = (index: number) => {
     setOpenIndex(openIndex === index ? -1 : index);
   };
 
+  const {
+    cursiveText: eyebrow,
+    headingPart1,
+    headingPart2,
+    description,
+    bottomBanner,
+    items = [],
+  } = faq;
+
   return (
-    <section className="relative bg-[#fff7fa] overflow-hidden py-8 flex items-center">
-       <div className=" mx-auto px-5 sm:px-8 lg:px-12 relative z-10 flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-16 w-full lg:pt-0">
-        
-        <motion.div 
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="flex-1 w-full lg:self-start lg:mt-6 relative"
-        >
-          <div className="relative inline-block z-10">
-            <div className="absolute -inset-8 bg-gradient-to-r from-[#fff7fa] via-[#fff7fa]/90 to-transparent blur-xl rounded-full -z-10 lg:block hidden" />
-            
-            <h2 className="text-[30px] sm:text-[36px] md:text-[42px] lg:text-[48px] font-extrabold text-[#10213e] leading-[1.1] tracking-[-1px] mb-4">
-              {faq.headingPart1} <span className="text-[#ed1769]">{faq.headingPart2}</span>
-            </h2>
-            <p className="text-[#596274] text-[16px] sm:text-[17px] leading-[1.7] mb-8 max-w-[450px] font-medium relative">
-              {faq.description}
-            </p>
-          </div>
-          <div className="relative mt-8 lg:mt-0 lg:absolute lg:-right-[10%] xl:-right-[20%] lg:top-[200px] z-0 w-full lg:w-[680px] xl:w-[750px] flex justify-center lg:block">
-            <Image 
-              src="/images/faq/faq.webp" 
-              alt="faq-1" 
-              width={800} 
-              height={800} 
-              className="w-full max-w-[450px] lg:max-w-full h-auto object-contain" 
-            />
+    <section id="faq" className="scroll-mt-24 relative overflow-hidden bg-white py-16 sm:py-24">
+      <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-14">
+        <SectionHeading
+          eyebrow={eyebrow}
+          titlePart1={headingPart1}
+          titlePart2={headingPart2}
+          subtitle={description}
+          centered
+        />
 
-            <div className="absolute inset-0 z-10 pointer-events-none">
-              <div className="absolute inset-x-0 top-0 h-1/4 lg:h-1/3 bg-gradient-to-b from-[#fff7fa] to-transparent" />
-              <div className="absolute inset-y-0 left-0 w-1/4 lg:w-1/3 bg-gradient-to-r from-[#fff7fa] to-transparent" />
-              <div className="absolute inset-y-0 right-0 w-1/4 lg:w-1/3 bg-gradient-to-l from-[#fff7fa] to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#fff7fa] to-transparent" />
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="flex-1 w-full flex flex-col gap-4 py-6 z-10 relative">
-          {(faq.items || []).slice(0, 8).map((item: any, index: number) => {
+        <div className="mx-auto max-w-4xl space-y-4">
+          {items.map((item, index: number) => {
             const isOpen = openIndex === index;
 
             return (
-              <motion.div 
+              <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                className={`rounded-[12px] overflow-hidden transition-all duration-300 ${
-                  isOpen 
-                    ? "border border-[#f8c6d7] shadow-[0_15px_40px_rgba(237,23,105,0.08)]" 
-                    : "border border-[#f8c6d7] bg-white hover:border-[#ed1769]/40"
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
+                  isOpen
+                    ? "border-[#e11d48]/50 shadow-[0_10px_30px_rgba(225,29,72,0.08)] bg-white"
+                    : "border-rose-100 bg-white hover:border-rose-200"
                 }`}
               >
                 <button
+                  type="button"
                   onClick={() => toggleItem(index)}
-                  className={`w-full flex items-center justify-between px-6 py-5 text-left transition-all duration-300 ${
-                    isOpen 
-                      ? "bg-gradient-to-r from-[#6b25a2] to-[#f42661] text-white" 
-                      : "bg-white text-[#10213e]"
+                  className={`flex w-full items-center justify-between p-5 sm:p-6 text-left transition-colors cursor-pointer ${
+                    isOpen ? "bg-rose-50/50" : "hover:bg-rose-50/20"
                   }`}
+                  aria-expanded={isOpen}
                 >
-                  <div className="flex items-center gap-4">
-                    <span className="font-extrabold text-[15px] sm:text-[17px]">
-                      {index + 1}.
+                  <div className="flex items-center gap-3.5 pr-4">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-rose-100 text-xs font-bold text-[#e11d48]">
+                      {index + 1}
                     </span>
-                    <span className="font-bold text-[15px] sm:text-[17px]">
+                    <span className="text-base sm:text-lg font-bold text-slate-900">
                       {item.question}
                     </span>
                   </div>
-                  <div className="shrink-0 ml-4">
-                    {isOpen ? (
-                      <ChevronsUp size={22} strokeWidth={2.5} className="text-white" />
-                    ) : (
-                      <ChevronsDown size={22} strokeWidth={2.5} className="text-[#ed1769]" />
-                    )}
+
+                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 ${
+                    isOpen ? "rotate-180 bg-[#e11d48] text-white" : "bg-rose-50 text-[#e11d48]"
+                  }`}>
+                    <ChevronDown size={18} />
                   </div>
                 </button>
 
@@ -101,13 +80,10 @@ export default function FaqSection() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                      className="bg-white"
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      <div className="px-6 py-6 pb-7">
-                        <p className="text-[#596274] text-[15px] sm:text-[16px] leading-[1.8]">
-                          {item.answer}
-                        </p>
+                      <div className="border-t border-rose-100/60 p-5 sm:p-6 pt-4 text-sm sm:text-base leading-relaxed text-slate-600">
+                        {item.answer}
                       </div>
                     </motion.div>
                   )}
@@ -117,6 +93,20 @@ export default function FaqSection() {
           })}
         </div>
 
+        {/* Still have questions prompt */}
+        {bottomBanner && (
+          <div className="mt-12 text-center">
+            <p className="text-sm text-slate-600">
+              {bottomBanner.description}{" "}
+              <a
+                href={bottomBanner.buttonLink || "#contact"}
+                className="font-bold text-[#e11d48] underline underline-offset-4 hover:text-[#be123c]"
+              >
+                {bottomBanner.buttonText}
+              </a>
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

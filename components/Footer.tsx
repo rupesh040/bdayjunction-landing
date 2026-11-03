@@ -2,280 +2,174 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { MapPin, Mail, Phone } from "lucide-react";
+import { MapPin, Mail, Phone, Heart } from "lucide-react";
 import * as LucideIcons from "lucide-react";
-import { site, footer as footerData, header, pageBanners, about, blog, services } from "@/data";
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 25,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.65,
-      ease: [0.22, 1, 0.36, 1] as any,
-    },
-  },
-};
+import { site, footer } from "@/data";
 
 export default function Footer() {
-  const footer = footerData as any;
+  const quickLinks = footer.quickLinks || [];
+  const serviceLinks = footer.services || [];
+  const contactAddress = footer.contact?.address;
+  const contactPhone = Array.isArray(footer.contact?.phone)
+    ? footer.contact.phone[0]
+    : footer.contact?.phone;
+  const contactEmail = footer.contact?.email;
+
+  const homeHref = quickLinks[0]?.href || "#hero";
 
   return (
-    <footer className="relative overflow-hidden bg-[#f5c9d3] text-[#01174a]">
-      <div className="absolute -left-24 -top-24 h-64 w-64 rounded-full bg-white/30 blur-3xl" />
-      <div className="absolute -bottom-32 right-0 h-72 w-72 rounded-full bg-pink-300/20 blur-3xl" />
+    <footer className="relative overflow-hidden bg-slate-950 text-slate-300 border-t border-slate-800/80">
+      <div className="pointer-events-none absolute -left-28 -top-28 h-80 w-80 rounded-full bg-rose-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-36 right-0 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
 
-      <div className="relative mx-auto max-w-[1450px] px-6 pb-7 pt-12 sm:px-8 sm:pt-14 lg:px-12 lg:pt-16 xl:px-14">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_0.85fr_1fr_1.15fr] lg:gap-10 xl:gap-16"
-        >
-          <motion.div variants={itemVariants} className="max-w-[390px]">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.25 }}
-              className="inline-block"
-            >
-             <Link href="/" aria-label="BdayJunction Home">
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.25 }}
-                className="relative"
+      <div className="relative mx-auto max-w-[1500px] px-6 pt-16 pb-10 sm:px-8 sm:pt-20 sm:pb-12 lg:px-12 xl:px-14">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 xl:gap-10">
+          <div className="flex flex-col space-y-5">
+            <div>
+              <Link
+                href={homeHref}
+                aria-label={`${site.name} ${quickLinks[0]?.name || "Home"}`}
+                className="inline-block transition-transform hover:opacity-95"
               >
                 <Image
                   src={site.logo}
                   alt={site.name}
-                  width={100}
-                  height={100}
-                  className="h-18 w-auto object-contain"
+                  width={140}
+                  height={55}
+                  className="h-12 sm:h-14 w-auto object-contain brightness-110"
                 />
-              </motion.div>
-            </Link>
-            </motion.div>
+              </Link>
 
-            <motion.p
-              variants={itemVariants}
-              className="mt-7 max-w-[370px] text-[14px] leading-6 sm:text-[15px] sm:leading-7"
-            >
-              {footer.description}
-            </motion.p>
+              <p className="mt-4 text-sm leading-relaxed text-slate-400">
+                {footer.description}
+              </p>
+            </div>
 
-            <motion.div
-              variants={itemVariants}
-              className="mt-7 flex flex-wrap gap-4"
-            >
-              {footer.social.map((link: any, index: number) => (
-                <motion.a
+            <div className="flex flex-wrap gap-2.5 pt-1">
+              {(footer.social || []).map((link, index: number) => (
+                <a
                   key={`${link.name}-${index}`}
                   href={link.href}
                   aria-label={link.name}
-                  whileHover={{
-                    y: -5,
-                    scale: 1.08,
-                    backgroundColor: "#f6b5ca",
-                  }}
-                  whileTap={{ scale: 0.92 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex h-[56px] w-[56px] items-center justify-center rounded-full bg-[#f8c6d7] shadow-sm"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-300 hover:bg-[#e11d48] hover:text-white hover:border-[#e11d48] hover:-translate-y-0.5 transition-all duration-200"
                 >
                   {link.svg ? (
-                    <span dangerouslySetInnerHTML={{ __html: link.svg }} className="w-[26px] h-[26px] [&>svg]:w-full [&>svg]:h-full flex items-center justify-center" />
+                    <span
+                      dangerouslySetInnerHTML={{ __html: link.svg }}
+                      className="w-4 h-4 [&>svg]:w-full [&>svg]:h-full flex items-center justify-center"
+                    />
                   ) : (
                     (() => {
-                      const Icon = link.icon ? (LucideIcons as any)[
-                        link.icon.split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join("")
-                      ] || LucideIcons.Link : LucideIcons.Link;
-                      return <Icon size={20} />;
+                      const Icon = link.icon
+                        ? (LucideIcons as any)[
+                            link.icon
+                              .split("-")
+                              .map(
+                                (w: string) =>
+                                   w.charAt(0).toUpperCase() +
+                                   w.slice(1).toLowerCase(),
+                              )
+                              .join("")
+                          ] || LucideIcons.Link
+                        : LucideIcons.Link;
+                      return <Icon size={16} />;
                     })()
                   )}
-                </motion.a>
+                </a>
               ))}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          <motion.div variants={itemVariants}>
-            <FooterHeading title={footer.quickLinksTitle || "Quick Links"} />
+          <div>
+            <h3 className="text-[15px] font-semibold text-white tracking-wide mb-5 flex items-center gap-2">
+              <span>{footer.quickLinksTitle}</span>
+            </h3>
 
-            <ul className="space-y-4">
-              {footer.quickLinks.map((link: any, index: number) => (
-                <motion.li
-                  key={`${link.name}-${index}`}
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
+            <ul className="space-y-3 text-sm">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="group flex items-center justify-between gap-3 text-[14px] transition-colors duration-200 hover:text-[#df1762] sm:text-[15px]"
+                    className="text-slate-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-200"
                   >
-                    <span>{link.name}</span>
-                    <span className="text-[24px] leading-none text-[#e01b69] transition-transform duration-200 group-hover:translate-x-1">
-                      ›
-                    </span>
+                    {link.name}
                   </Link>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants}>
-            <FooterHeading title={footer.servicesTitle || "Our Services"} />
+          <div>
+            <h3 className="text-[15px] font-semibold text-white tracking-wide mb-5 flex items-center gap-2">
+              <span>{footer.servicesTitle}</span>
+            </h3>
 
-            <ul className="space-y-4">
-              {footer.services.map((service: any, index: number) => (
-                <motion.li
-                  key={`${service.name}-${index}`}
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
+            <ul className="space-y-3 text-sm">
+              {serviceLinks.map((s) => (
+                <li key={s.name}>
                   <Link
-                    href={service.href}
-                    className="group flex items-center justify-between gap-3 text-[14px] transition-colors duration-200 hover:text-[#df1762] sm:text-[15px]"
+                    href={s.href}
+                    className="text-slate-400 hover:text-white hover:translate-x-1 inline-block transition-all duration-200"
                   >
-                    <span>{service.name}</span>
-                    <span className="text-[24px] leading-none text-[#e01b69] transition-transform duration-200 group-hover:translate-x-1">
-                      ›
-                    </span>
+                    {s.name}
                   </Link>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants}>
-            <FooterHeading title={footer.contactTitle || "Contact Us"} />
+          <div>
+            <h3 className="text-[15px] font-semibold text-white tracking-wide mb-5 flex items-center gap-2">
+              <span>{footer.contactTitle}</span>
+            </h3>
 
-            <div className="space-y-5">
-              <ContactItem
-                icon={<Mail size={23} strokeWidth={2} />}
-                href={`mailto:${footer.contact.email}`}
-              >
-                {footer.contact.email}
-              </ContactItem>
-
-              <ContactItem
-                icon={<MapPin size={23} strokeWidth={2} />}
-              >
-                {footer.contact.address}
-              </ContactItem>
-
-              <div className="flex items-start gap-4">
-                <div className="flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full bg-[#f8bfd2] text-[#df1762]">
-                  <Phone size={23} strokeWidth={2} />
+            <div className="space-y-4 text-sm">
+              {contactAddress && (
+                <div className="flex items-start gap-3.5 group">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5 border border-white/10 text-[#e11d48] group-hover:bg-[#e11d48]/10 group-hover:border-[#e11d48]/30 transition-colors">
+                    <MapPin size={16} />
+                  </div>
+                  <span className="text-slate-400 text-sm leading-relaxed pt-1">
+                    {contactAddress}
+                  </span>
                 </div>
+              )}
 
-                <div className="flex flex-col gap-1 pt-1">
-                  {footer.contact.phone.map((phone: string, index: number) => (
-                    <motion.a
-                      key={`${phone}-${index}`}
-                      href={`tel:${phone}`}
-                      whileHover={{ x: 3 }}
-                      className="text-[14px] transition-colors hover:text-[#df1762] sm:text-[15px]"
-                    >
-                      {phone}
-                    </motion.a>
-                  ))}
+              {contactPhone && (
+                <div className="flex items-center gap-3.5 group">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5 border border-white/10 text-[#e11d48] group-hover:bg-[#e11d48]/10 group-hover:border-[#e11d48]/30 transition-colors">
+                    <Phone size={16} />
+                  </div>
+                  <a
+                    href={`tel:${contactPhone.replace(/[^\d+]/g, "")}`}
+                    className="text-slate-400 hover:text-white text-sm transition-colors"
+                  >
+                    {contactPhone}
+                  </a>
                 </div>
-              </div>
+              )}
+
+              {contactEmail && (
+                <div className="flex items-center gap-3.5 group">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5 border border-white/10 text-[#e11d48] group-hover:bg-[#e11d48]/10 group-hover:border-[#e11d48]/30 transition-colors">
+                    <Mail size={16} />
+                  </div>
+                  <a
+                    href={`mailto:${contactEmail}`}
+                    className="text-slate-400 hover:text-white text-sm transition-colors truncate"
+                  >
+                    {contactEmail}
+                  </a>
+                </div>
+              )}
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          whileInView={{ scaleX: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{
-            duration: 0.9,
-            ease: [0.22, 1, 0.36, 1] as any,
-          }}
-          className="mt-10 h-[1.5px] origin-left bg-[#e65b91] sm:mt-12"
-        />
-
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{
-            duration: 0.6,
-            delay: 0.15,
-            ease: [0.22, 1, 0.36, 1] as any,
-          }}
-          className="pt-6 text-center"
-        >
-          <p className="text-[13px] sm:text-[14px]">
-            {footer.copyrightText || `© ${site.name} 2026 | All Rights Reserved`}
-          </p>
-        </motion.div>
+        <div className="mt-14 pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-400">
+          <p>{footer.copyrightText}</p>
+        </div>
       </div>
     </footer>
   );
-}
-
-function FooterHeading({ title }: { title: string }) {
-  return (
-    <div className="mb-7">
-      <h3 className="text-[22px] font-bold tracking-[-0.5px] sm:text-[24px]">
-        {title}
-      </h3>
-
-      <div className="mt-4 h-[3px] w-10 rounded-full bg-[#e21a69]" />
-    </div>
-  );
-}
-
-function ContactItem({
-  icon,
-  children,
-  href,
-}: {
-  icon: React.ReactNode;
-  children: React.ReactNode;
-  href?: string;
-}) {
-  const content = (
-    <div className="flex items-start gap-4">
-      <motion.div
-        whileHover={{ scale: 1.08, rotate: 3 }}
-        transition={{ duration: 0.2 }}
-        className="flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full bg-[#f8bfd2] text-[#df1762]"
-      >
-        {icon}
-      </motion.div>
-
-      <span className="pt-1 text-[14px] leading-6 sm:text-[15px] sm:leading-6">
-        {children}
-      </span>
-    </div>
-  );
-
-  if (href) {
-    return (
-      <motion.a
-        href={href}
-        whileHover={{ x: 3 }}
-        className="block transition-colors hover:text-[#df1762]"
-      >
-        {content}
-      </motion.a>
-    );
-  }
-
-  return content;
 }

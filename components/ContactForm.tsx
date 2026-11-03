@@ -5,226 +5,249 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   CheckCircle2,
   ChevronDown,
-  List,
   Mail,
   MessageSquare,
   Phone,
   User,
+  List,
+  ArrowRight,
+  Loader2,
   X,
 } from "lucide-react";
 import { contact } from "@/data";
 
-function ContactInput({
-  icon,
-  placeholder,
-  type,
-  required = false,
-}: {
-  icon: React.ReactNode;
-  placeholder: string;
-  type: string;
-  required?: boolean;
-}) {
-  return (
-    <div className="relative">
-      <div className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-[#ed2671]">
-        {icon}
-      </div>
-
-      <input
-        type={type}
-        placeholder={placeholder}
-        required={required}
-        className="h-[52px] w-full rounded-full border border-[#f5cddd] bg-white/50 px-12 text-[14px] text-[#263653] outline-none transition-all duration-300 placeholder:text-[#788397] focus:border-[#ed2671] focus:ring-2 focus:ring-[#ed2671]/10"
-      />
-    </div>
-  );
-}
-
 export default function ContactForm() {
   const {
-    services,
+    services = [],
     buttonText,
     successTitle,
     successDescription,
+    formFields,
   } = contact;
 
-  const [service, setService] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [option, setOption] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.replace(/\D/g, "");
+    // Allow digits, plus, hyphens, spaces, and parentheses
+    const value = event.target.value.replace(/[^\d+ ()-]/g, "");
     setPhone(value);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setShowSuccess(true);
+    setIsSubmitting(true);
+
+    // Realistic submission simulation
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setShowSuccess(true);
+      // Reset form fields
+      setName("");
+      setEmail("");
+      setPhone("");
+      setOption("");
+      setMessage("");
+    }, 700);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="mt-7 space-y-4">
+      <form onSubmit={handleSubmit} className="mt-7 space-y-4 sm:space-y-4.5">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <ContactInput
-            icon={<User size={20} />}
-            placeholder="Your Name"
-            type="text"
-            required
-          />
-
-          <ContactInput
-            icon={<Mail size={20} />}
-            placeholder="Your Email"
-            type="email"
-            required
-          />
-
+          {/* Your Name */}
           <div className="relative">
-            <Phone
-              size={20}
-              className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-[#ed2671]"
+            <label htmlFor="contact-name" className="sr-only">
+              {formFields.namePlaceholder}
+            </label>
+            <User
+              size={19}
+              className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-[#ec186c]"
             />
-
             <input
-              type="tel"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              value={phone}
-              onChange={handlePhoneChange}
-              maxLength={15}
+              id="contact-name"
+              type="text"
+              name="name"
+              autoComplete="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={formFields.namePlaceholder}
               required
-              placeholder="Phone Number"
-              className="h-[52px] w-full rounded-full border border-[#f5cddd] bg-white/50 px-12 text-[14px] text-[#263653] outline-none transition-all duration-300 placeholder:text-[#788397] focus:border-[#ed2671] focus:ring-2 focus:ring-[#ed2671]/10"
+              className="h-[52px] sm:h-[54px] w-full rounded-full border border-[#f8a9c7] bg-white pl-12 pr-5 text-[14px] sm:text-[15px] text-slate-800 outline-none transition-all placeholder:text-[#798498] focus:border-[#ec186c] focus:ring-4 focus:ring-[#ec186c]/10"
             />
           </div>
 
+          {/* Your Email */}
           <div className="relative">
-            <List
-              size={20}
-              className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-[#ed2671]"
+            <label htmlFor="contact-email" className="sr-only">
+              {formFields.emailPlaceholder}
+            </label>
+            <Mail
+              size={19}
+              className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-[#ec186c]"
             />
-
-            <select
-              value={service}
-              onChange={(event) => setService(event.target.value)}
+            <input
+              id="contact-email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={formFields.emailPlaceholder}
               required
-              className="h-[52px] w-full appearance-none rounded-full border border-[#f5cddd] bg-white/50 px-12 pr-12 text-[14px] text-[#647087] outline-none transition-all duration-300 focus:border-[#ed2671] focus:ring-2 focus:ring-[#ed2671]/10"
-            >
-              <option value="">Choose Option</option>
+              className="h-[52px] sm:h-[54px] w-full rounded-full border border-[#f8a9c7] bg-white pl-12 pr-5 text-[14px] sm:text-[15px] text-slate-800 outline-none transition-all placeholder:text-[#798498] focus:border-[#ec186c] focus:ring-4 focus:ring-[#ec186c]/10"
+            />
+          </div>
 
+          {/* Phone Number */}
+          <div className="relative">
+            <label htmlFor="contact-phone" className="sr-only">
+              {formFields.phonePlaceholder}
+            </label>
+            <Phone
+              size={19}
+              className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-[#ec186c]"
+            />
+            <input
+              id="contact-phone"
+              type="tel"
+              name="phone"
+              autoComplete="tel"
+              value={phone}
+              onChange={handlePhoneChange}
+              maxLength={20}
+              required
+              placeholder={formFields.phonePlaceholder}
+              className="h-[52px] sm:h-[54px] w-full rounded-full border border-[#f8a9c7] bg-white pl-12 pr-5 text-[14px] sm:text-[15px] text-slate-800 outline-none transition-all placeholder:text-[#798498] focus:border-[#ec186c] focus:ring-4 focus:ring-[#ec186c]/10"
+            />
+          </div>
+
+          {/* Choose Option */}
+          <div className="relative">
+            <label htmlFor="contact-option" className="sr-only">
+              {formFields.servicePlaceholder}
+            </label>
+            <List
+              size={19}
+              className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-[#ec186c]"
+            />
+            <select
+              id="contact-option"
+              name="option"
+              value={option}
+              onChange={(e) => setOption(e.target.value)}
+              required
+              className={`h-[52px] sm:h-[54px] w-full appearance-none rounded-full border border-[#f8a9c7] bg-white pl-12 pr-11 text-[14px] sm:text-[15px] outline-none transition-all focus:border-[#ec186c] focus:ring-4 focus:ring-[#ec186c]/10 cursor-pointer ${
+                option ? "text-slate-800" : "text-[#798498]"
+              }`}
+            >
+              <option value="" disabled hidden>
+                {formFields.servicePlaceholder}
+              </option>
               {services.map((item: string) => (
-                <option key={item} value={item}>
+                <option key={item} value={item} className="text-slate-800">
                   {item}
                 </option>
               ))}
             </select>
-
             <ChevronDown
-              size={19}
-              className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-[#ed2671]"
+              size={18}
+              strokeWidth={2.4}
+              className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-[#ec186c]"
             />
           </div>
         </div>
 
+        {/* Your Message */}
         <div className="relative">
+          <label htmlFor="contact-message" className="sr-only">
+            {formFields.messagePlaceholder}
+          </label>
           <MessageSquare
-            size={20}
-            className="pointer-events-none absolute left-5 top-5 text-[#ed2671]"
+            size={19}
+            className="pointer-events-none absolute left-5 top-4 text-[#ec186c]"
           />
-
           <textarea
+            id="contact-message"
+            name="message"
             rows={4}
-            required
-            placeholder="Your Message"
-            className="w-full resize-none rounded-[18px] border border-[#f5cddd] bg-white/50 px-12 py-4 text-[14px] text-[#263653] outline-none transition-all duration-300 placeholder:text-[#788397] focus:border-[#ed2671] focus:ring-2 focus:ring-[#ed2671]/10"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder={formFields.messagePlaceholder}
+            className="w-full resize-none rounded-2xl border border-[#f8a9c7] bg-white pl-12 pr-5 pt-3.5 pb-4 text-[14px] sm:text-[15px] text-slate-800 outline-none transition-all placeholder:text-[#798498] focus:border-[#ec186c] focus:ring-4 focus:ring-[#ec186c]/10"
           />
         </div>
 
-        <motion.button
-          type="submit"
-          whileHover={{
-            scale: 1.02,
-            boxShadow: "0 10px 25px rgba(225, 32, 110, 0.22)",
-          }}
-          whileTap={{ scale: 0.98 }}
-          className="mx-auto flex h-[52px] w-full max-w-[470px] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#ed1769] to-[#e51f86] px-7 text-[14px] font-bold text-white shadow-[0_7px_20px_rgba(225,32,110,0.14)] sm:text-[15px]"
-        >
-          <span>{buttonText}</span>
-          <span className="text-xl leading-none">→</span>
-        </motion.button>
-      </form>
-
-      <AnimatePresence>
-        {showSuccess && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-[#151027]/45 px-5 backdrop-blur-sm"
-            onClick={() => setShowSuccess(false)}
+        {/* Submit Button */}
+        <div className="flex justify-center pt-2 sm:pt-3">
+          <motion.button
+            type="submit"
+            disabled={isSubmitting}
+            whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+            whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+            className="inline-flex h-[50px] sm:h-[52px] items-center justify-center gap-2 rounded-full bg-[#ec186c] px-10 sm:px-14 text-[15px] sm:text-base font-semibold text-white shadow-[0_8px_25px_rgba(236,24,108,0.32)] transition-all duration-200 hover:bg-[#d81362] hover:shadow-[0_10px_30px_rgba(236,24,108,0.45)] active:scale-[0.98] disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
           >
+            {isSubmitting ? (
+              <>
+                <Loader2 size={18} className="animate-spin text-white" />
+                <span>{formFields.submittingText}</span>
+              </>
+            ) : (
+              <>
+                <span>{buttonText}</span>
+                <ArrowRight size={18} strokeWidth={2.4} />
+              </>
+            )}
+          </motion.button>
+        </div>
+
+        {/* Inline Success Notice */}
+        <AnimatePresence>
+          {showSuccess && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.85, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              onClick={(event) => event.stopPropagation()}
-              className="relative w-full max-w-[430px] overflow-hidden rounded-[24px] border border-pink-100 bg-white px-7 py-9 text-center shadow-[0_25px_80px_rgba(40,20,50,0.2)] sm:px-10"
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.98 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-emerald-100/60 p-4 sm:p-5 text-emerald-900 shadow-sm"
             >
-              <button
-                type="button"
-                onClick={() => setShowSuccess(false)}
-                aria-label="Close success message"
-                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#fff0f5] text-[#e62973] transition-colors hover:bg-[#ffe1eb]"
-              >
-                <X size={18} />
-              </button>
-
-              <motion.div
-                initial={{ scale: 0, rotate: -20 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ delay: 0.15, duration: 0.5, type: "spring", stiffness: 180 }}
-                className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#ffe5ef] text-[#e62973]"
-              >
-                <CheckCircle2 size={44} strokeWidth={1.8} />
-              </motion.div>
-
-              <motion.h3
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25, duration: 0.4 }}
-                className="mt-6 text-[25px] font-extrabold text-[#10213e] sm:text-[28px]"
-              >
-                {successTitle}
-              </motion.h3>
-
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.32, duration: 0.4 }}
-                className="mt-3 text-[14px] leading-6 text-[#687184] sm:text-[15px]"
-              >
-                {successDescription}
-              </motion.p>
-
-              <motion.button
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-                type="button"
-                onClick={() => setShowSuccess(false)}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="mt-7 rounded-full bg-gradient-to-r from-[#ed1769] to-[#e51f86] px-9 py-3 text-[14px] font-bold text-white shadow-[0_8px_20px_rgba(225,32,110,0.18)]"
-              >
-                Continue
-              </motion.button>
+              <div className="flex items-start gap-3.5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-sm">
+                  <CheckCircle2 className="h-5 w-5" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm sm:text-base font-bold text-emerald-950">
+                    {successTitle}
+                  </h4>
+                  <p className="mt-1 text-xs sm:text-sm leading-relaxed text-emerald-800">
+                    {successDescription}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setShowSuccess(false)}
+                    className="mt-3 inline-flex items-center text-xs font-bold text-emerald-700 underline underline-offset-2 hover:text-emerald-900 cursor-pointer"
+                  >
+                    {formFields.resetButtonText}
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowSuccess(false)}
+                  aria-label="Dismiss notification"
+                  className="shrink-0 p-1 text-emerald-600 hover:text-emerald-900 transition-colors rounded-lg hover:bg-emerald-200/50 cursor-pointer"
+                >
+                  <X size={16} />
+                </button>
+              </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+      </form>
     </>
   );
 }

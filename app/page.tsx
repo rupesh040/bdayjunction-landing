@@ -1,23 +1,21 @@
 import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
-import CTASection from "@/components/CTASection";
+import GallerySection from "@/components/GallerySection";
 import Testimonials from "@/components/Testimonials";
-import Speakers from "@/components/Speakers";
-import BlogSection from "@/components/BlogSection";
 import FaqSection from "@/components/FaqSection";
+import ContactSection from "@/components/ContactSection";
 
 export default function Home() {
   return (
-    <>
+    <div className="relative overflow-hidden">
       <Hero />
       <AboutSection />
       <ServicesSection />
-      <CTASection />
+      <GallerySection />
       <Testimonials />
-      <Speakers />
-      <BlogSection />
       <FaqSection />
-    </>
+      <ContactSection />
+    </div>
   );
 }

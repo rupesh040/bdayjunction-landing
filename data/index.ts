@@ -1,69 +1,56 @@
 import contentData from "./content.json";
 import {
   Site,
+  Theme,
   Content,
-  BirthdayTopbar1 as TopbarData,
   BirthdayHeader1 as HeaderData,
-  QuickLink as NavbarItem,
   BirthdayBanner1 as BannerData,
   BirthdayAbout1 as AboutData,
   BirthdayServices1 as ServicesData,
-  BirthdayCTA1 as CTAData,
+  BirthdayGallery1 as GalleryData,
   BirthdayTestimonial1 as TestimonialData,
-  BirthdayTeam1 as TeamData,
-  BirthdayBlog1 as BlogData,
   BirthdayFAQ1 as FAQData,
-  BirthdayFooter1 as FooterData,
-  PageBanners as PageBannersData,
   BirthdayContact1 as ContactData,
-  BirthdayTeam1Item as TeamItem,
+  BirthdayFooter1 as FooterData,
   BirthdayServices1Item as ServiceItem,
   BirthdayTestimonial1Item as TestimonialItem,
-  BirthdayBlog1Item as BlogItem,
-  BirthdayFAQ1Item as FAQItem
+  BirthdayFAQ1Item as FAQItem,
+  ContactCardItem,
+  QuickLink as NavbarItem,
 } from "../types/content";
 
-export const site = (contentData as any).Birthday.site as Site;
-const sections = (contentData as any).Birthday.sections;
+export const site = (contentData as unknown as Content).Birthday.site;
+export const theme = (contentData as unknown as Content).Birthday.theme;
+const sections = (contentData as unknown as Content).Birthday.sections;
 
-// Explicitly export each section with typed aliases
-export const topbar = sections.Topbar.variants.BirthdayTopbar1 as TopbarData;
-export const header = sections.Header.variants.BirthdayHeader1 as HeaderData;
-export const banner = sections.Banner.variants.BirthdayBanner1 as BannerData;
-export const about = sections.About.variants.BirthdayAbout1 as AboutData;
-export const services = sections.Services.variants.BirthdayServices1 as ServicesData;
-export const cta = sections.CTA.variants.BirthdayCTA1 as CTAData;
-export const testimonial = sections.Testimonial.variants.BirthdayTestimonial1 as TestimonialData;
-export const team = sections.Team.variants.BirthdayTeam1 as TeamData;
-export const blog = sections.Blog.variants.BirthdayBlog1 as BlogData;
-export const faq = sections.FAQ.variants.BirthdayFAQ1 as FAQData;
-export const footer = sections.Footer.variants.BirthdayFooter1 as FooterData;
-export const pageBanners = sections.PageBanners as PageBannersData;
-export const contact = sections.Contact.variants.BirthdayContact1 as ContactData;
+export const header = sections.Header.variants.BirthdayHeader1;
+export const banner = sections.Banner.variants.BirthdayBanner1;
+export const about = sections.About.variants.BirthdayAbout1;
+export const services = sections.Services.variants.BirthdayServices1;
+export const gallery = sections.Gallery.variants.BirthdayGallery1;
+export const testimonial = sections.Testimonial.variants.BirthdayTestimonial1;
+export const faq = sections.FAQ.variants.BirthdayFAQ1;
+export const contact = sections.Contact.variants.BirthdayContact1;
+export const footer = sections.Footer.variants.BirthdayFooter1;
 
-// Keep the default export mirroring the full JSON structure to not break existing component imports
-export const content = contentData as Content;
+export const content = contentData as unknown as Content;
 export default content;
 
 export type {
-  TopbarData,
+  Site,
+  Theme,
   HeaderData,
-  NavbarItem,
   BannerData,
   AboutData,
   ServicesData,
-  CTAData,
+  GalleryData,
   TestimonialData,
-  TeamData,
-  BlogData,
   FAQData,
-  FooterData,
-  PageBannersData,
   ContactData,
-  Site,
-  TeamItem,
+  FooterData,
   ServiceItem,
   TestimonialItem,
-  BlogItem,
-  FAQItem
+  FAQItem,
+  ContactCardItem,
+  NavbarItem,
 };

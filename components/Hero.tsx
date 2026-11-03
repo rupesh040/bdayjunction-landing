@@ -4,12 +4,10 @@ import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { banner } from "@/data";
+import { banner, site } from "@/data";
 
 export default function Hero() {
-  const banners = banner.banners && banner.banners.length > 0 
-    ? banner.banners 
-    : [banner.backgroundImage || "/images/hero/hero.jpg"];
+  const banners = banner.banners && banner.banners.length > 0 ? banner.banners : [];
 
   const [[currentIndex, direction], setPage] = useState<[number, number]>([0, 0]);
   const [isPaused, setIsPaused] = useState(false);
@@ -61,14 +59,16 @@ export default function Hero() {
     }),
   };
 
+  if (banners.length === 0) return null;
+
   return (
     <section
-      className="relative w-full overflow-hidden bg-slate-950 h-[450px]"
+      id="hero"
+      className="relative w-full overflow-hidden bg-slate-950 h-[360px] sm:h-[460px] md:h-[540px] lg:h-[620px]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      aria-label="Banner Image Carousel"
+      aria-label={`${site.name} Banner`}
     >
-      {/* Slides */}
       <div className="relative h-full w-full overflow-hidden">
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
@@ -82,7 +82,7 @@ export default function Hero() {
           >
             <Image
               src={banners[currentIndex]}
-              alt={`Banner slide ${currentIndex + 1}`}
+              alt={`${site.name} ${currentIndex + 1}`}
               fill
               priority={currentIndex === 0}
               sizes="100vw"
@@ -92,13 +92,12 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
-      {/* Navigation Arrows */}
       {banners.length > 1 && (
         <>
           <button
             onClick={() => paginate(-1)}
             aria-label="Previous slide"
-            className="group absolute left-4 sm:left-7 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-13 sm:w-13 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-[#ed2671] active:scale-95 shadow-lg"
+            className="group absolute left-4 sm:left-7 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-13 sm:w-13 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-[#ed2671] active:scale-95 shadow-lg border border-white/10 cursor-pointer"
           >
             <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7 transition-transform duration-300 group-hover:-translate-x-0.5" />
           </button>
@@ -106,19 +105,18 @@ export default function Hero() {
           <button
             onClick={() => paginate(1)}
             aria-label="Next slide"
-            className="group absolute right-4 sm:right-7 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-13 sm:w-13 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-[#ed2671] active:scale-95 shadow-lg"
+            className="group absolute right-4 sm:right-7 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-13 sm:w-13 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-[#ed2671] active:scale-95 shadow-lg border border-white/10 cursor-pointer"
           >
             <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7 transition-transform duration-300 group-hover:translate-x-0.5" />
           </button>
 
-          {/* Dots Indicator */}
           <div className="absolute bottom-5 sm:bottom-7 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5">
             {banners.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => goToSlide(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                   idx === currentIndex
                     ? "w-8 bg-[#ed2671] shadow-md shadow-[#ed2671]/40"
                     : "w-2.5 bg-white/60 hover:bg-white"
