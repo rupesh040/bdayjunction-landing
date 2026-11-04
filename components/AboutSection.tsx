@@ -78,7 +78,7 @@ export default function AboutSection() {
             </motion.p>
 
             {/* CTA Button */}
-            {buttonText && (
+            {Boolean(buttonText) && (
               <motion.div variants={itemVariants} className="mt-8 flex flex-wrap items-center gap-4">
                 <Link
                   href={buttonHref || "#services"}

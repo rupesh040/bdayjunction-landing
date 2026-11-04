@@ -63,7 +63,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-            className="relative min-h-[400px] overflow-hidden rounded-[24px] sm:rounded-[28px] sm:min-h-[500px] lg:min-h-[540px] xl:min-h-[560px] shadow-[0_12px_40px_rgba(218,48,112,0.06)]"
+            className="relative min-h-[300px] overflow-hidden rounded-[24px] sm:rounded-[28px]  shadow-[0_12px_40px_rgba(218,48,112,0.06)]"
           >
             <motion.div
               initial={{ scale: 1.08 }}
@@ -114,28 +114,34 @@ export default function ContactSection() {
                 </motion.div>
               )}
 
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.65, delay: 0.08 }}
-                className="text-[32px] font-extrabold leading-[1.08] tracking-[-1px] text-[#10213e] sm:text-[38px] md:text-[44px]"
-              >
-                {formTitlePart1}{" "}
-                <span className="text-[#ed2671]">
-                  {formTitlePart2}
-                </span>
-              </motion.h2>
+              {(formTitlePart1 || formTitlePart2) && (
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.65, delay: 0.08 }}
+                  className="text-[32px] font-extrabold leading-[1.08] tracking-[-1px] text-[#10213e] sm:text-[38px] md:text-[44px]"
+                >
+                  {formTitlePart1}{" "}
+                  {formTitlePart2 && (
+                    <span className="text-[#ed2671]">
+                      {formTitlePart2}
+                    </span>
+                  )}
+                </motion.h2>
+              )}
 
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.15 }}
-                className="mt-3 max-w-[620px] text-[14px] leading-relaxed text-slate-700 font-medium sm:text-[15px] sm:leading-7"
-              >
-                {formDescription}
-              </motion.p>
+              {formDescription && (
+                <motion.p
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.15 }}
+                  className="mt-3 max-w-[620px] text-[14px] leading-relaxed text-slate-700 font-medium sm:text-[15px] sm:leading-7"
+                >
+                  {formDescription}
+                </motion.p>
+              )}
 
               <ContactForm />
             </div>

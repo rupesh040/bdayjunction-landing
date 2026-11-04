@@ -76,8 +76,8 @@
             "headingPart1": "Crafting Joyful Celebrations",
             "headingPart2": "Made Just For You",
             "description": "At BdayJunction, we believe every birthday is a milestone worth celebrating with flair and delight. Our dedicated team manages everything—from bespoke themes and luxury balloon artistry to gourmet treats and day-of coordination—giving you the freedom to immerse in pure joy.",
-            "buttonText": "Explore Our Themes",
-            "buttonHref": "#services",
+            "buttonText": "",
+            "buttonHref": "",
             "mainImage": "/images/about/about-1.jpg",
             "smallImage": "/images/about/about-2.jpg",
             "thirdImage": "/images/about/about-3.jpg"
@@ -327,9 +327,9 @@
             "description": "Have a party vision or ready to reserve your date? Fill out the form below and our celebration specialists will get back to you within 2 hours with customized themes & proposals.",
             "image": "/images/contact.webp",
             "formEyebrow": "SEND US A MESSAGE",
-            "formTitlePart1": "Write Here",
-            "formTitlePart2": "Below?",
-            "formDescription": "For your special day, we will do everything from planning to execution and make it truly memorable. Get in touch with us now.",
+            "formTitlePart1": "",
+            "formTitlePart2": "",
+            "formDescription": "",
             "formFields": {
               "namePlaceholder": "Your Name",
               "emailPlaceholder": "Your Email",
